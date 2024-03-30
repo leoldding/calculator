@@ -7,14 +7,27 @@
 
 .calculator{
     width: 20em;
+    padding: 2em;
+    border-style: solid;
+    border-width: 0.25em;
+    border-radius: 1em;
+    border-color: white;
 }
 
 .header {
+    margin: 0;
     transition: filter 300ms;
 }
 
 .header:hover {
    filter: drop-shadow(0 0 0.3em rgba(255, 255, 255, 0.5)); 
+}
+
+.display-area {
+    font-size: 3em;
+    text-align: right;
+    margin: 0.3em 0;
+    padding: 0 0.3em;
 }
 
 .button-grid {
@@ -34,22 +47,9 @@
     text-align: center;
     border-radius: 50%;
     transition: background 200ms;
-}
 
-.c1 {
-    grid-column: 1;
-}
-
-.c2 {
-    grid-column: 2;
-}
-
-.c3 {
-    grid-column: 3;
-}
-
-.c4 {
-    grid-column: 4;
+    border: none;
+    padding: 0;
 }
 
 .zero {
