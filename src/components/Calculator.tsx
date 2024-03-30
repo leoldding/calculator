@@ -94,7 +94,11 @@ export function Calculator() {
         if (value > 999999999 || value < -999999999) {
             setValue("Error")
         } else if (value % 1 != 0) {
-            setValue("DECIMAL")
+            const negative = value.toString().indexOf("-")
+            const decimal = value.toString().indexOf(".")
+            const count = decimal - negative - 1
+            setValue(value.toString().slice(0, decimal + 10 - count))
+            
         } else {
             setValue(value.toString())
         }
