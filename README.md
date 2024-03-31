@@ -1,6 +1,7 @@
 # Calculator Web App
 
 An attempt to replicate the iOS calculator app.
+Created using TypeScript and React.
 
 ## Running App
 
