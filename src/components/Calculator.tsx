@@ -7,7 +7,6 @@ type Button = {
     function?: () => void; 
 }
 
-
 export function Calculator() {
     const [value, setValue] = useState<string>("0");
     const [numCount, setNumCount] = useState<number>(1);
@@ -53,7 +52,31 @@ export function Calculator() {
     }
 
     const percentage = (): void => {
-        
+        if (Number(value) !== 0) {
+            const decimal = value.indexOf(".")
+            const negative = value.indexOf("-") 
+            if (decimal === -1) {
+                if (numCount === 1) {
+                    setValue((negative === 0 ? "-" : "") + "0.0" + value.slice(negative + 1))
+                    setNumCount(3)
+                } else if (numCount === 2) {
+                    setValue((negative === 0 ? "-" : "") + "0." + value.slice(negative + 1))
+                    setNumCount(3)
+                } else { 
+                    setValue(value.slice(0, numCount - 2 + negative + 1) + "." + value.slice(numCount - 2 + negative + 1))
+                }
+            } else if (numCount < 8) {
+                if (decimal === 2 + negative) {
+                    setValue((negative === 0 ? "-" : "") + "0.0" + value.slice(0, decimal) + value.slice(decimal + 1))
+                    setNumCount(numCount + 2)
+               } else if (decimal === 3 + negative) {
+                   setValue((negative === 0 ? "-" : "") + "0." + value.slice(0, decimal) + value.slice(decimal + 1))
+                   setNumCount(numCount + 2)
+               }
+            }
+        } else {
+            setValue("0")
+        }
     }
 
     const decimal = (): void => {
@@ -94,13 +117,18 @@ export function Calculator() {
         if (value > 999999999 || value < -999999999) {
             setValue("Error")
         } else if (value % 1 != 0) {
-            const negative = value.toString().indexOf("-")
-            const decimal = value.toString().indexOf(".")
+            const valueStr = value.toString()
+            const negative = valueStr.indexOf("-")
+            const decimal = valueStr.indexOf(".")
             const count = decimal - negative - 1
-            setValue(value.toString().slice(0, decimal + 10 - count))
+            setValue(valueStr.slice(0, decimal + 10 - count))
+            setNumCount(valueStr.length - (negative === 0 ? 1 : 0) - 1)
             
         } else {
-            setValue(value.toString())
+            const valueStr = value.toString()
+            setValue(valueStr)
+            const negative = valueStr.includes("-")
+            setNumCount(valueStr.length - (negative ? 1 : 0))
         }
     }
 
@@ -129,6 +157,7 @@ export function Calculator() {
                 }
             }
             setReset(true)
+            setOperation("none")
         }
     }
 
